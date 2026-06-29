@@ -3,90 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Flow Math Practice</title>
+    <title>Flow Math</title>
     
-    <!-- PWA Requirements -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#3b82f6">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
     
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Profile Login Modal -->
     <div id="profile-modal" class="modal">
         <div class="modal-content">
             <h2>Welcome to Flow Math</h2>
             <p>Enter a profile name to save your progress.</p>
             <input type="text" id="username-input" placeholder="Your Name" autocomplete="off">
-            <button id="create-profile-btn" class="btn btn-primary">Start Playing</button>
+            <button id="create-profile-btn" class="btn btn-primary">Continue</button>
         </div>
     </div>
 
-    <header class="app-header">
-        <div class="user-info">
-            <span id="display-name">Player</span> 
-            <div class="streak-display">🔥 Streak: <span id="current-streak">0</span></div>
-        </div>
-        <button id="toggle-dashboard" class="btn">Stats</button>
-    </header>
+    <div id="start-screen" class="screen view-active">
+        <header class="app-header">
+            <div class="user-info">
+                <span id="display-name">Player</span>
+                <span class="user-subtitle">Ready to train?</span>
+            </div>
+            <button id="btn-switch-user" class="btn">Switch User</button>
+        </header>
 
-    <main class="quiz-container" id="quiz-container">
-        <div id="feedback-message" class="feedback hidden">Wrong answer, try again!</div>
+        <main class="menu-container">
+            <div class="menu-card">
+                <h2>Game Setup</h2>
+                
+                <div class="setting-group">
+                    <label>Operation</label>
+                    <select id="operation-select" class="form-control">
+                        <option value="×">Multiplication (×)</option>
+                        <option value="+">Addition (+)</option>
+                        <option value="-">Subtraction (-)</option>
+                    </select>
+                </div>
+
+                <div class="settings-grid">
+                    <div class="setting-group">
+                        <label>Num 1 Range</label>
+                        <div class="range-inputs">
+                            <input type="number" id="min1" min="1"> <span>-</span> <input type="number" id="max1" min="1">
+                        </div>
+                    </div>
+                    <div class="setting-group">
+                        <label>Num 2 Range</label>
+                        <div class="range-inputs">
+                            <input type="number" id="min2" min="1"> <span>-</span> <input type="number" id="max2" min="1">
+                        </div>
+                    </div>
+                </div>
+
+                <button id="btn-start-game" class="btn btn-primary btn-large">Start Session</button>
+                <button id="btn-view-history" class="btn btn-secondary btn-large">View My History</button>
+            </div>
+        </main>
+    </div>
+
+    <div id="game-screen" class="screen view-hidden">
+        <header class="game-header">
+            <div class="game-stats-top">
+                <div class="stat-pill">🔥 <span id="current-streak">0</span></div>
+                <div class="stat-pill">⏱️ <span id="avg-speed">0.0</span>s</div>
+            </div>
+            <div class="game-controls">
+                <button id="btn-pause" class="btn">Pause</button>
+                <button id="btn-stop" class="btn btn-danger">Stop</button>
+            </div>
+        </header>
+
+        <main class="quiz-container" id="quiz-container">
+            <div id="feedback-message" class="feedback hidden">Wrong answer, try again!</div>
+            
+            <div class="equation-wrapper">
+                <span id="num1" class="number"></span>
+                <span id="operator-display" class="operator">×</span>
+                <span id="num2" class="number"></span>
+                <span class="operator">=</span>
+                <input type="number" id="answer-input" class="answer-input" inputmode="numeric" autocomplete="off">
+            </div>
+        </main>
+
+        <div id="pause-overlay" class="modal hidden">
+            <div class="modal-content">
+                <h2>Paused</h2>
+                <p>Take a breath. Your speed timer is paused.</p>
+                <button id="btn-resume" class="btn btn-primary">Resume</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="history-screen" class="screen view-hidden">
+        <header class="app-header">
+            <h2>Session History</h2>
+            <button id="btn-close-history" class="btn">Back</button>
+        </header>
         
-        <div class="equation-wrapper">
-            <span id="num1" class="number"></span>
-            <span class="operator">×</span>
-            <span id="num2" class="number"></span>
-            <span class="operator">=</span>
-            <!-- inputmode="numeric" ensures phones open the number pad automatically -->
-            <input type="number" id="answer-input" class="answer-input" inputmode="numeric" autofocus autocomplete="off">
-        </div>
-    </main>
-
-    <aside id="dashboard" class="dashboard hidden">
-        <div class="dashboard-content">
-            <div class="dashboard-header">
-                <h2>Lifetime Progress</h2>
-                <button id="switch-user-btn" class="btn">Switch User</button>
+        <main class="history-container">
+            <div class="history-table-wrapper">
+                <table id="history-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Type</th>
+                            <th>Score</th>
+                            <th>Acc (%)</th>
+                            <th>Speed (s)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        </tbody>
+                </table>
             </div>
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <span class="stat-label">Total Solved</span>
-                    <span id="stat-correct" class="stat-value">0</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">Accuracy</span>
-                    <span id="stat-accuracy" class="stat-value">0%</span>
-                </div>
-                <div class="stat-box">
-                    <span class="stat-label">All-Time High Streak</span>
-                    <span id="stat-best-streak" class="stat-value">0</span>
-                </div>
-            </div>
-
-            <hr>
-
-            <h2>Difficulty</h2>
-            <div class="settings-grid">
-                <div class="setting-group">
-                    <label>Number 1 Range</label>
-                    <div class="range-inputs">
-                        <input type="number" id="min1" min="1"> <span>to</span> <input type="number" id="max1" min="1">
-                    </div>
-                </div>
-                <div class="setting-group">
-                    <label>Number 2 Range</label>
-                    <div class="range-inputs">
-                        <input type="number" id="min2" min="1"> <span>to</span> <input type="number" id="max2" min="1">
-                    </div>
-                </div>
-            </div>
-            <button id="apply-settings" class="btn btn-primary">Apply & Restart</button>
-        </div>
-    </aside>
+        </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
