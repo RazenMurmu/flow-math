@@ -1,5 +1,5 @@
-const CACHE_NAME = 'flow-math-v1';
-const ASSETS = [
+const CACHE_NAME = 'flow-math-v2'; // Updated to v2!
+const ASSETS_TO_CACHE = [
     './',
     './index.html',
     './styles.css',
@@ -7,20 +7,14 @@ const ASSETS = [
     './manifest.json'
 ];
 
-// Install and cache assets
-self.addEventListener('install', (e) => {
-    e.waitUntil(
-        caches.open(CACHE_NAME).then((cache) => {
-            return cache.addAll(ASSETS);
-        })
+self.addEventListener('install', (event) => {
+    event.waitUntil(
+        caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS_TO_CACHE))
     );
 });
 
-// Serve from cache first, fallback to network
-self.addEventListener('fetch', (e) => {
-    e.respondWith(
-        caches.match(e.request).then((response) => {
-            return response || fetch(e.request);
-        })
+self.addEventListener('fetch', (event) => {
+    event.respondWith(
+        caches.match(event.request).then((response) => response || fetch(event.request))
     );
 });
