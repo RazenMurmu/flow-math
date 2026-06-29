@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flow Math</title>
-    
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#3b82f6">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-    
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -45,6 +42,14 @@
                     </select>
                 </div>
 
+                <div class="setting-group">
+                    <label>Input Mode</label>
+                    <select id="input-mode-select" class="form-control">
+                        <option value="manual">Typing (Flow State)</option>
+                        <option value="choice">Multiple Choice (3 Options)</option>
+                    </select>
+                </div>
+
                 <div class="settings-grid">
                     <div class="setting-group">
                         <label>Num 1 Range</label>
@@ -71,6 +76,7 @@
             <div class="game-stats-top">
                 <div class="stat-pill">🔥 <span id="current-streak">0</span></div>
                 <div class="stat-pill">⏱️ <span id="avg-speed">0.0</span>s</div>
+                <div class="stat-pill">⭐ <span id="current-score">0</span></div>
             </div>
             <div class="game-controls">
                 <button id="btn-pause" class="btn">Pause</button>
@@ -79,14 +85,25 @@
         </header>
 
         <main class="quiz-container" id="quiz-container">
-            <div id="feedback-message" class="feedback hidden">Wrong answer, try again!</div>
+            <div id="feedback-message" class="feedback hidden">Wrong answer! -1 Point</div>
             
             <div class="equation-wrapper">
                 <span id="num1" class="number"></span>
                 <span id="operator-display" class="operator">×</span>
                 <span id="num2" class="number"></span>
                 <span class="operator">=</span>
-                <input type="number" id="answer-input" class="answer-input" inputmode="numeric" autocomplete="off">
+                
+                <div id="input-container-manual">
+                    <input type="number" id="answer-input" class="answer-input" inputmode="numeric" autocomplete="off">
+                </div>
+            </div>
+
+            <div id="input-container-choice" class="hidden">
+                <div class="choice-grid">
+                    <button class="btn-choice" id="choice-0"></button>
+                    <button class="btn-choice" id="choice-1"></button>
+                    <button class="btn-choice" id="choice-2"></button>
+                </div>
             </div>
         </main>
 
@@ -104,21 +121,11 @@
             <h2>Session History</h2>
             <button id="btn-close-history" class="btn">Back</button>
         </header>
-        
         <main class="history-container">
             <div class="history-table-wrapper">
                 <table id="history-table">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Type</th>
-                            <th>Score</th>
-                            <th>Acc (%)</th>
-                            <th>Speed (s)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="history-body">
-                        </tbody>
+                    <thead><tr><th>Date</th><th>Type</th><th>Score</th><th>Acc (%)</th><th>Speed (s)</th></tr></thead>
+                    <tbody id="history-body"></tbody>
                 </table>
             </div>
         </main>

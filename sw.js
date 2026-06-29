@@ -1,4 +1,4 @@
-const CACHE_NAME = 'flow-math-v2'; // Updated to v2!
+const CACHE_NAME = 'flow-math-v3'; // Bumped to v3
 const ASSETS_TO_CACHE = [
     './',
     './index.html',
