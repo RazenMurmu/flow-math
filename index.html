@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Flow Math Practice</title>
+    
+    <!-- PWA Requirements -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='[http://www.w3.org/2000/svg](http://www.w3.org/2000/svg)' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+    
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Profile Login Modal -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content">
+            <h2>Welcome to Flow Math</h2>
+            <p>Enter a profile name to save your progress.</p>
+            <input type="text" id="username-input" placeholder="Your Name" autocomplete="off">
+            <button id="create-profile-btn" class="btn btn-primary">Start Playing</button>
+        </div>
+    </div>
+
+    <header class="app-header">
+        <div class="user-info">
+            <span id="display-name">Player</span> 
+            <div class="streak-display">🔥 Streak: <span id="current-streak">0</span></div>
+        </div>
+        <button id="toggle-dashboard" class="btn">Stats</button>
+    </header>
+
+    <main class="quiz-container" id="quiz-container">
+        <div id="feedback-message" class="feedback hidden">Wrong answer, try again!</div>
+        
+        <div class="equation-wrapper">
+            <span id="num1" class="number"></span>
+            <span class="operator">×</span>
+            <span id="num2" class="number"></span>
+            <span class="operator">=</span>
+            <!-- inputmode="numeric" ensures phones open the number pad automatically -->
+            <input type="number" id="answer-input" class="answer-input" inputmode="numeric" autofocus autocomplete="off">
+        </div>
+    </main>
+
+    <aside id="dashboard" class="dashboard hidden">
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h2>Lifetime Progress</h2>
+                <button id="switch-user-btn" class="btn">Switch User</button>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <span class="stat-label">Total Solved</span>
+                    <span id="stat-correct" class="stat-value">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Accuracy</span>
+                    <span id="stat-accuracy" class="stat-value">0%</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">All-Time High Streak</span>
+                    <span id="stat-best-streak" class="stat-value">0</span>
+                </div>
+            </div>
+
+            <hr>
+
+            <h2>Difficulty</h2>
+            <div class="settings-grid">
+                <div class="setting-group">
+                    <label>Number 1 Range</label>
+                    <div class="range-inputs">
+                        <input type="number" id="min1" min="1"> <span>to</span> <input type="number" id="max1" min="1">
+                    </div>
+                </div>
+                <div class="setting-group">
+                    <label>Number 2 Range</label>
+                    <div class="range-inputs">
+                        <input type="number" id="min2" min="1"> <span>to</span> <input type="number" id="max2" min="1">
+                    </div>
+                </div>
+            </div>
+            <button id="apply-settings" class="btn btn-primary">Apply & Restart</button>
+        </div>
+    </aside>
+
+    <script src="script.js"></script>
+</body>
+</html>
