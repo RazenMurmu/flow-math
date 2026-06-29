@@ -62,6 +62,91 @@ td { padding: 1rem; border-bottom: 1px solid #e2e8f0; font-weight: 500; }
 tr:last-child td { border-bottom: none; }
 
 /* Modals */
-.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(4px); }
-.modal-content { background: var(--surface); padding: 2.5rem; border-radius: 12px; width: 90%; max-width: 400px; text-align: center; }
+.modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; backdrop-filter: blur(4px); padding: 1rem; }
+.modal-content { background: var(--surface); padding: 2.5rem; border-radius: 12px; width: 100%; max-width: 420px; text-align: center; }
 .modal-content input { width: 100%; padding: 0.75rem; font-size: 1.1rem; border: 2px solid #cbd5e1; border-radius: 6px; margin: 1rem 0; outline: none; }
+
+/* Mobile improvements */
+body {
+    overflow-y: auto;
+    -webkit-tap-highlight-color: transparent;
+}
+.screen {
+    position: relative;
+    padding-bottom: env(safe-area-inset-bottom, 1rem);
+}
+.app-header,
+.game-header {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+.menu-card {
+    width: 100%;
+    padding: 1.5rem;
+}
+.settings-grid {
+    flex-direction: column;
+}
+.range-inputs {
+    flex-wrap: wrap;
+}
+.range-inputs input {
+    min-width: 72px;
+}
+.game-controls {
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.stat-pill {
+    flex: 1 1 48%;
+}
+.equation-wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: clamp(2.2rem, 5vw, 4.5rem);
+}
+.answer-input {
+    width: clamp(110px, 40vw, 180px);
+}
+.feedback {
+    margin: 1rem 0 1.5rem;
+}
+.history-container {
+    padding: 1rem;
+}
+.history-table-wrapper {
+    overflow-x: auto;
+}
+table {
+    min-width: 560px;
+}
+@media (max-width: 640px) {
+    .app-header,
+    .game-header {
+        padding: 1rem;
+    }
+    .user-info {
+        width: 100%;
+    }
+    .btn {
+        width: 100%;
+    }
+    .game-controls .btn {
+        flex: 1 1 48%;
+    }
+    .quiz-container {
+        padding: 1rem;
+    }
+    .menu-card {
+        padding: 1.25rem;
+    }
+    .setting-group label {
+        font-size: 0.8rem;
+    }
+    .form-control,
+    .range-inputs input {
+        font-size: 1rem;
+        padding: 0.75rem;
+    }
+}
